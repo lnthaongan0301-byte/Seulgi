@@ -1,0 +1,1401 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thảo Ngân ♡</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    import {
+      getStorage
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    // 🔥 THAY FIREBASE CONFIG CỦA BẠN
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    window.auth = getAuth(app);
+    window.db = getFirestore(app);
+    window.storage = getStorage(app);
+
+    window.firebaseFunctions = {
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut,
+      doc,
+      setDoc,
+      getDoc
+    };
+  </script>
+</head>
+
+<body>
+
+<!-- ================= LOADING ================= -->
+<div id="loading-screen">
+  <div class="loading-box">
+    <div class="spinner">
+      <i class="fa-solid fa-star"></i>
+    </div>
+
+    <div class="loading-text">
+      loading...
+    </div>
+
+    <div class="loading-bar">
+      <div class="loading-fill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CURSOR ================= -->
+<div class="cursor"></div>
+
+<!-- ================= FLOATING STICKERS ================= -->
+<div class="stickers">
+  <img src="https://i.pinimg.com/736x/4c/4f/3c/4c4f3c61a1bb6f2cbbf3e463a5e3b34d.jpg" class="floating sticker s1">
+  <img src="https://i.pinimg.com/736x/63/8f/c7/638fc7e7a48cf8f5856f37a671e7e55f.jpg" class="floating sticker s2">
+</div>
+
+<!-- ================= ADMIN LOGIN ================= -->
+<div class="admin-login" id="adminLogin">
+
+  <div class="login-card">
+    <h2>Admin Login ♡</h2>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+
+    <button id="loginBtn">
+      Login
+    </button>
+  </div>
+
+</div>
+
+<!-- ================= ADMIN PANEL ================= -->
+<div class="admin-panel hidden" id="adminPanel">
+
+  <h3>Admin Mode</h3>
+
+  <button id="editToggle">
+    Edit Mode
+  </button>
+
+  <button id="saveBtn">
+    Save
+  </button>
+
+  <button id="addImageBtn">
+    Add Image
+  </button>
+
+  <button id="addButtonBtn">
+    Add Button
+  </button>
+
+  <button id="changeMusicBtn">
+    Change Music
+  </button>
+
+  <button id="changeBgBtn">
+    Change Background
+  </button>
+
+  <button id="logoutBtn">
+    Logout
+  </button>
+
+</div>
+
+<!-- ================= MUSIC BUTTON ================= -->
+<button class="music-toggle" id="musicToggle">
+  <i class="fa-solid fa-music"></i>
+</button>
+
+<audio
+id="bgMusic"
+autoplay
+loop
+src="https://cdn.pixabay.com/audio/2023/07/31/audio_5f0c0a1b65.mp3">
+</audio>
+
+<!-- ================= MAIN ================= -->
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header cute-box" data-aos="fade-down">
+
+    <div class="avatar-box">
+
+      <img
+      src="https://i.pinimg.com/736x/2d/8c/73/2d8c73912ef4fd7f83a3df17f373f24f.jpg"
+      class="avatar editable-image"
+      id="avatar">
+
+    </div>
+
+    <div class="welcome">
+
+      <h1 contenteditable="false" class="editable">
+        Welcome ♡
+      </h1>
+
+      <p contenteditable="false" class="editable">
+        pastel carrd aesthetic profile
+      </p>
+
+    </div>
+
+    <div class="clock" id="clock"></div>
+
+  </header>
+
+  <!-- NAV -->
+  <nav class="menu cute-box" id="menuButtons">
+
+    <a href="#about" class="menu-btn">About me</a>
+    <a href="#prices" class="menu-btn">Prices</a>
+    <a href="#gallery" class="menu-btn">Gallery</a>
+
+  </nav>
+
+  <!-- ABOUT -->
+  <section
+  class="section cute-box"
+  id="about"
+  data-aos="fade-up">
+
+    <h2>About Me ♡</h2>
+
+    <div class="about-card">
+
+      <h3 contenteditable="false" class="editable">
+        Thảo Ngân
+      </h3>
+
+      <ul>
+
+        <li contenteditable="false" class="editable">
+          cute
+        </li>
+
+        <li contenteditable="false" class="editable">
+          artist
+        </li>
+
+        <li contenteditable="false" class="editable">
+          anime lover
+        </li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+  <!-- PRICES -->
+  <section
+  class="section cute-box"
+  id="prices"
+  data-aos="fade-up">
+
+    <h2>Prices ♡</h2>
+
+    <div class="price-grid">
+
+      <div class="price-card editable-box">
+        <h3 contenteditable="false" class="editable">
+          Icon
+        </h3>
+
+        <p contenteditable="false" class="editable">
+          100k
+        </p>
+      </div>
+
+      <div class="price-card editable-box">
+        <h3 contenteditable="false" class="editable">
+          Banner
+        </h3>
+
+        <p contenteditable="false" class="editable">
+          200k
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- GALLERY -->
+  <section
+  class="section cute-box"
+  id="gallery"
+  data-aos="fade-up">
+
+    <h2>Gallery ♡</h2>
+
+    <div class="gallery-grid" id="galleryGrid">
+
+      <div class="gallery-item">
+        <img src="https://i.pinimg.com/736x/1c/98/4f/1c984f3b4d6c8c16f7457f99bc24a0af.jpg">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://i.pinimg.com/736x/60/4b/32/604b321e92ef2f8db7d48f3e5f9d38e6.jpg">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://i.pinimg.com/736x/29/fd/c7/29fdc7e2ef5cae0efef7632f1dba44df.jpg">
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SOCIAL -->
+  <section
+  class="section cute-box"
+  data-aos="fade-up">
+
+    <h2>Social ♡</h2>
+
+    <div class="socials">
+
+      <a
+      href="https://www.facebook.com/share/1KYNMpiG5b/?mibextid=wwXIfr"
+      target="_blank"
+      class="social-btn">
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+
+      <a
+      href="https://www.tiktok.com/@raw.yv?_r=1&_t=ZS-96jj2e6GjAI"
+      target="_blank"
+      class="social-btn">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+
+      <a
+      href="https://www.instagram.com/ate_pr3tty.gir1?igsh=eTBldnd2eXN3MWh6&utm_source=qr"
+      target="_blank"
+      class="social-btn">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+
+      <button class="social-btn" id="zaloBtn">
+        <i class="fa-solid fa-comment"></i>
+      </button>
+
+    </div>
+
+  </section>
+
+</div>
+
+<!-- ================= ZALO POPUP ================= -->
+<div class="popup hidden" id="zaloPopup">
+
+  <div class="popup-content">
+
+    <span class="close-popup">&times;</span>
+
+    <h3>Zalo QR ♡</h3>
+
+    <img
+    src="https://i.pinimg.com/736x/e3/93/4e/e3934e9753ff3b3cc818d4c5f9200ec1.jpg"
+    class="qr-image">
+
+  </div>
+
+</div>
+
+<!-- SortableJS -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<!-- JS -->
+<script src="script.js"></script>
+
+</body>
+</html>
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thảo Ngân ♡</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    import {
+      getStorage
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    // 🔥 THAY FIREBASE CONFIG CỦA BẠN
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    window.auth = getAuth(app);
+    window.db = getFirestore(app);
+    window.storage = getStorage(app);
+
+    window.firebaseFunctions = {
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut,
+      doc,
+      setDoc,
+      getDoc
+    };
+  </script>
+</head>
+
+<body>
+
+<!-- ================= LOADING ================= -->
+<div id="loading-screen">
+  <div class="loading-box">
+    <div class="spinner">
+      <i class="fa-solid fa-star"></i>
+    </div>
+
+    <div class="loading-text">
+      loading...
+    </div>
+
+    <div class="loading-bar">
+      <div class="loading-fill"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CURSOR ================= -->
+<div class="cursor"></div>
+
+<!-- ================= FLOATING STICKERS ================= -->
+<div class="stickers">
+  <img src="https://i.pinimg.com/736x/4c/4f/3c/4c4f3c61a1bb6f2cbbf3e463a5e3b34d.jpg" class="floating sticker s1">
+  <img src="https://i.pinimg.com/736x/63/8f/c7/638fc7e7a48cf8f5856f37a671e7e55f.jpg" class="floating sticker s2">
+</div>
+
+<!-- ================= ADMIN LOGIN ================= -->
+<div class="admin-login" id="adminLogin">
+
+  <div class="login-card">
+    <h2>Admin Login ♡</h2>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+
+    <button id="loginBtn">
+      Login
+    </button>
+  </div>
+
+</div>
+
+<!-- ================= ADMIN PANEL ================= -->
+<div class="admin-panel hidden" id="adminPanel">
+
+  <h3>Admin Mode</h3>
+
+  <button id="editToggle">
+    Edit Mode
+  </button>
+
+  <button id="saveBtn">
+    Save
+  </button>
+
+  <button id="addImageBtn">
+    Add Image
+  </button>
+
+  <button id="addButtonBtn">
+    Add Button
+  </button>
+
+  <button id="changeMusicBtn">
+    Change Music
+  </button>
+
+  <button id="changeBgBtn">
+    Change Background
+  </button>
+
+  <button id="logoutBtn">
+    Logout
+  </button>
+
+</div>
+
+<!-- ================= MUSIC BUTTON ================= -->
+<button class="music-toggle" id="musicToggle">
+  <i class="fa-solid fa-music"></i>
+</button>
+
+<audio
+id="bgMusic"
+autoplay
+loop
+src="https://cdn.pixabay.com/audio/2023/07/31/audio_5f0c0a1b65.mp3">
+</audio>
+
+<!-- ================= MAIN ================= -->
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header cute-box" data-aos="fade-down">
+
+    <div class="avatar-box">
+
+      <img
+      src="https://i.pinimg.com/736x/2d/8c/73/2d8c73912ef4fd7f83a3df17f373f24f.jpg"
+      class="avatar editable-image"
+      id="avatar">
+
+    </div>
+
+    <div class="welcome">
+
+      <h1 contenteditable="false" class="editable">
+        Welcome ♡
+      </h1>
+
+      <p contenteditable="false" class="editable">
+        pastel carrd aesthetic profile
+      </p>
+
+    </div>
+
+    <div class="clock" id="clock"></div>
+
+  </header>
+
+  <!-- NAV -->
+  <nav class="menu cute-box" id="menuButtons">
+
+    <a href="#about" class="menu-btn">About me</a>
+    <a href="#prices" class="menu-btn">Prices</a>
+    <a href="#gallery" class="menu-btn">Gallery</a>
+
+  </nav>
+
+  <!-- ABOUT -->
+  <section
+  class="section cute-box"
+  id="about"
+  data-aos="fade-up">
+
+    <h2>About Me ♡</h2>
+
+    <div class="about-card">
+
+      <h3 contenteditable="false" class="editable">
+        Thảo Ngân
+      </h3>
+
+      <ul>
+
+        <li contenteditable="false" class="editable">
+          cute
+        </li>
+
+        <li contenteditable="false" class="editable">
+          artist
+        </li>
+
+        <li contenteditable="false" class="editable">
+          anime lover
+        </li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+  <!-- PRICES -->
+  <section
+  class="section cute-box"
+  id="prices"
+  data-aos="fade-up">
+
+    <h2>Prices ♡</h2>
+
+    <div class="price-grid">
+
+      <div class="price-card editable-box">
+        <h3 contenteditable="false" class="editable">
+          Icon
+        </h3>
+
+        <p contenteditable="false" class="editable">
+          100k
+        </p>
+      </div>
+
+      <div class="price-card editable-box">
+        <h3 contenteditable="false" class="editable">
+          Banner
+        </h3>
+
+        <p contenteditable="false" class="editable">
+          200k
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- GALLERY -->
+  <section
+  class="section cute-box"
+  id="gallery"
+  data-aos="fade-up">
+
+    <h2>Gallery ♡</h2>
+
+    <div class="gallery-grid" id="galleryGrid">
+
+      <div class="gallery-item">
+        <img src="https://i.pinimg.com/736x/1c/98/4f/1c984f3b4d6c8c16f7457f99bc24a0af.jpg">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://i.pinimg.com/736x/60/4b/32/604b321e92ef2f8db7d48f3e5f9d38e6.jpg">
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://i.pinimg.com/736x/29/fd/c7/29fdc7e2ef5cae0efef7632f1dba44df.jpg">
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SOCIAL -->
+  <section
+  class="section cute-box"
+  data-aos="fade-up">
+
+    <h2>Social ♡</h2>
+
+    <div class="socials">
+
+      <a
+      href="https://www.facebook.com/share/1KYNMpiG5b/?mibextid=wwXIfr"
+      target="_blank"
+      class="social-btn">
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+
+      <a
+      href="https://www.tiktok.com/@raw.yv?_r=1&_t=ZS-96jj2e6GjAI"
+      target="_blank"
+      class="social-btn">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+
+      <a
+      href="https://www.instagram.com/ate_pr3tty.gir1?igsh=eTBldnd2eXN3MWh6&utm_source=qr"
+      target="_blank"
+      class="social-btn">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+
+      <button class="social-btn" id="zaloBtn">
+        <i class="fa-solid fa-comment"></i>
+      </button>
+
+    </div>
+
+  </section>
+
+</div>
+
+<!-- ================= ZALO POPUP ================= -->
+<div class="popup hidden" id="zaloPopup">
+
+  <div class="popup-content">
+
+    <span class="close-popup">&times;</span>
+
+    <h3>Zalo QR ♡</h3>
+
+    <img
+    src="https://i.pinimg.com/736x/e3/93/4e/e3934e9753ff3b3cc818d4c5f9200ec1.jpg"
+    class="qr-image">
+
+  </div>
+
+</div>
+
+<!-- SortableJS -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<!-- JS -->
+<script src="script.js"></script>
+
+</body>
+</html>
+```
+
+```css
+/* style.css */
+
+:root{
+  --pink:#ffdce8;
+  --cream:#fff8ef;
+  --sage:#dce7d2;
+  --brown:#8c6f65;
+  --white:#ffffff;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Quicksand',sans-serif;
+  background:
+  radial-gradient(circle at top,#fff,#ffeef5);
+
+  color:#6b4d4d;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* BACKGROUND ANIMATION */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+  url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity:.2;
+  animation:bgMove 20s linear infinite;
+  z-index:-1;
+}
+
+@keyframes bgMove{
+  from{
+    transform:translateY(0);
+  }
+  to{
+    transform:translateY(100px);
+  }
+}
+
+/* LOADING */
+#loading-screen{
+  position:fixed;
+  inset:0;
+  background:#fff6fa;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  transition:1s;
+}
+
+.loading-box{
+  text-align:center;
+}
+
+.spinner{
+  font-size:50px;
+  animation:spin 2s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.loading-text{
+  margin-top:15px;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  50%{
+    opacity:.3;
+  }
+}
+
+.loading-bar{
+  width:220px;
+  height:14px;
+  background:#fff;
+  border-radius:999px;
+  margin-top:15px;
+  overflow:hidden;
+}
+
+.loading-fill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(to right,#ffc7dd,#dce7d2);
+  animation:load 3s forwards;
+}
+
+@keyframes load{
+  to{
+    width:100%;
+  }
+}
+
+/* CURSOR */
+.cursor{
+  width:18px;
+  height:18px;
+  background:#ffc4d8;
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:999999;
+  transform:translate(-50%,-50%);
+}
+
+/* CONTAINER */
+.container{
+  width:95%;
+  max-width:500px;
+  margin:auto;
+  padding:20px 0 100px;
+}
+
+/* BOX */
+.cute-box{
+  background:rgba(255,255,255,.65);
+  backdrop-filter:blur(10px);
+  border:2px dashed #f3b6ca;
+  border-radius:30px;
+  box-shadow:
+  0 4px 15px rgba(255,192,203,.2);
+  padding:20px;
+  margin-bottom:20px;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid white;
+}
+
+.welcome{
+  text-align:center;
+  flex:1;
+}
+
+.clock{
+  font-weight:bold;
+}
+
+/* BUTTONS */
+.menu{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+
+.menu-btn,
+.social-btn,
+.admin-panel button,
+.login-card button{
+  border:none;
+  background:#ffdce8;
+  padding:12px 18px;
+  border-radius:999px;
+  cursor:pointer;
+  text-decoration:none;
+  color:#6b4d4d;
+  transition:.3s;
+  font-weight:bold;
+}
+
+.menu-btn:hover,
+.social-btn:hover,
+.admin-panel button:hover{
+  transform:translateY(-4px) scale(1.05);
+}
+
+/* SECTION */
+.section h2{
+  margin-bottom:15px;
+}
+
+/* PRICE */
+.price-grid{
+  display:grid;
+  gap:15px;
+}
+
+.price-card{
+  background:#fff;
+  padding:20px;
+  border-radius:20px;
+  transition:.3s;
+}
+
+.price-card:hover{
+  transform:scale(1.03);
+}
+
+/* GALLERY */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.gallery-item img{
+  width:100%;
+  border-radius:18px;
+  object-fit:cover;
+}
+
+/* SOCIAL */
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+}
+
+/* FLOATING */
+.floating{
+  animation:floating 4s ease-in-out infinite;
+}
+
+@keyframes floating{
+  50%{
+    transform:translateY(-12px);
+  }
+}
+
+/* STICKERS */
+.sticker{
+  position:fixed;
+  width:60px;
+  z-index:-1;
+  opacity:.8;
+}
+
+.s1{
+  top:10%;
+  left:2%;
+}
+
+.s2{
+  right:2%;
+  bottom:10%;
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.popup-content{
+  background:white;
+  padding:25px;
+  border-radius:30px;
+  text-align:center;
+  width:300px;
+}
+
+.qr-image{
+  width:100%;
+  border-radius:20px;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* LOGIN */
+.admin-login{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:99999;
+}
+
+.login-card{
+  background:white;
+  padding:20px;
+  border-radius:25px;
+  width:250px;
+  border:2px dashed pink;
+}
+
+.login-card input{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:14px;
+  border:none;
+  background:#fff5f8;
+}
+
+/* ADMIN PANEL */
+.admin-panel{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:170px;
+  background:white;
+  padding:18px;
+  border-radius:25px;
+  border:2px dashed pink;
+  z-index:99999;
+}
+
+.admin-panel button{
+  width:100%;
+  margin-top:10px;
+}
+
+.music-toggle{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  z-index:9999;
+  border:none;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#fff;
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+  .header{
+    flex-direction:column;
+  }
+
+}
+```
+
+```javascript
+// script.js
+
+// ================= AOS =================
+AOS.init({
+  duration:1000
+});
+
+// ================= LOADING =================
+window.addEventListener("load",()=>{
+
+  setTimeout(()=>{
+    document.getElementById("loading-screen")
+    .style.opacity="0";
+
+    setTimeout(()=>{
+      document.getElementById("loading-screen")
+      .style.display="none";
+    },1000);
+
+  },3000);
+
+});
+
+// ================= CLOCK =================
+function updateClock(){
+
+  const now = new Date();
+
+  const time =
+  now.toLocaleTimeString("vi-VN");
+
+  document.getElementById("clock")
+  .innerText = time;
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+// ================= CUSTOM CURSOR =================
+const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove",(e)=>{
+
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+
+});
+
+// ================= MUSIC =================
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicToggle");
+
+let playing = true;
+
+music.volume = 0.4;
+
+musicBtn.addEventListener("click",()=>{
+
+  if(playing){
+    music.pause();
+  }else{
+    music.play();
+  }
+
+  playing = !playing;
+
+});
+
+// ================= ZALO =================
+const zaloBtn = document.getElementById("zaloBtn");
+const popup = document.getElementById("zaloPopup");
+
+zaloBtn.onclick = ()=>{
+
+  popup.classList.remove("hidden");
+
+};
+
+document.querySelector(".close-popup")
+.onclick = ()=>{
+
+  popup.classList.add("hidden");
+
+};
+
+// ================= EDIT MODE =================
+let editMode = false;
+
+const editBtn =
+document.getElementById("editToggle");
+
+editBtn.addEventListener("click",()=>{
+
+  editMode = !editMode;
+
+  document.querySelectorAll(".editable")
+  .forEach(el=>{
+
+    el.contentEditable = editMode;
+
+  });
+
+  if(editMode){
+
+    alert("Edit Mode Enabled ♡");
+
+  }
+
+});
+
+// ================= SAVE =================
+document.getElementById("saveBtn")
+.addEventListener("click",()=>{
+
+  const data = {
+
+    body:document.body.innerHTML
+
+  };
+
+  localStorage.setItem(
+    "websiteData",
+    JSON.stringify(data)
+  );
+
+  alert("Saved ♡");
+
+});
+
+// ================= LOAD =================
+window.addEventListener("DOMContentLoaded",()=>{
+
+  const saved =
+  localStorage.getItem("websiteData");
+
+  if(saved){
+
+    const parsed =
+    JSON.parse(saved);
+
+    document.body.innerHTML =
+    parsed.body;
+
+  }
+
+});
+
+// ================= ADD IMAGE =================
+document.getElementById("addImageBtn")
+.addEventListener("click",()=>{
+
+  const url =
+  prompt("Paste image url");
+
+  if(!url) return;
+
+  const div =
+  document.createElement("div");
+
+  div.className = "gallery-item";
+
+  div.innerHTML = `
+    <img src="${url}">
+  `;
+
+  document.getElementById("galleryGrid")
+  .appendChild(div);
+
+});
+
+// ================= ADD BUTTON =================
+document.getElementById("addButtonBtn")
+.addEventListener("click",()=>{
+
+  const name =
+  prompt("Button name");
+
+  const link =
+  prompt("Button link");
+
+  if(!name || !link) return;
+
+  const a =
+  document.createElement("a");
+
+  a.href = link;
+  a.innerText = name;
+  a.className = "menu-btn";
+
+  document.getElementById("menuButtons")
+  .appendChild(a);
+
+});
+
+// ================= CHANGE MUSIC =================
+document.getElementById("changeMusicBtn")
+.addEventListener("click",()=>{
+
+  const url =
+  prompt("Paste music url");
+
+  if(!url) return;
+
+  music.src = url;
+  music.play();
+
+});
+
+// ================= CHANGE BG =================
+document.getElementById("changeBgBtn")
+.addEventListener("click",()=>{
+
+  const url =
+  prompt("Background image url");
+
+  if(!url) return;
+
+  document.body.style.background =
+  `url(${url}) center/cover fixed`;
+
+});
+
+// ================= DRAG GALLERY =================
+new Sortable(
+  document.getElementById("galleryGrid"),
+  {
+    animation:150
+  }
+);
+
+// ================= FIREBASE LOGIN =================
+const {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} = window.firebaseFunctions;
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+loginBtn.addEventListener("click",()=>{
+
+  const email =
+  document.getElementById("email").value;
+
+  const password =
+  document.getElementById("password").value;
+
+  signInWithEmailAndPassword(
+    window.auth,
+    email,
+    password
+  )
+
+  .then(()=>{
+
+    alert("Login success ♡");
+
+  })
+
+  .catch(err=>{
+
+    alert(err.message);
+
+  });
+
+});
+
+// ================= AUTH STATE =================
+onAuthStateChanged(window.auth,(user)=>{
+
+  if(user){
+
+    document.getElementById("adminPanel")
+    .classList.remove("hidden");
+
+  }else{
+
+    document.getElementById("adminPanel")
+    .classList.add("hidden");
+
+  }
+
+});
+
+// ================= LOGOUT =================
+document.getElementById("logoutBtn")
+.addEventListener("click",()=>{
+
+  signOut(window.auth);
+
+});
+
+// ================= FLOAT ANIMATION =================
+gsap.from(".cute-box",{
+  opacity:0,
+  y:30,
+  duration:1,
+  stagger:0.15
+});
+```
